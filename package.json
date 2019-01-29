@@ -1,0 +1,20 @@
+{
+  "name": "capstone-symposium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "capstone.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://thomascastleman@bitbucket.org/thomascastleman/capstone-symposium.git"
+  },
+  "author": "Thomas Castleman, Rafe Forward, & Justin Williams",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/thomascastleman/capstone-symposium#readme",
+  "dependencies": {
+    "fast-csv": "^2.4.1",
+    "ordinal": "^1.0.2"
+  }
+}

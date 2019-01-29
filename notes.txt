@@ -1,0 +1,122 @@
+
+CAPSTONE SYMPOSIUM MATCHING ALGORITHM
+
+Language: Node.js script (not a web application)
+
+
+Things to generalize:
+	- number of choices students pick
+	- number of capstones that are grouped together (not always pairs)
+
+
+------------------------------ INPUT ------------------------------
+
+capstones.csv // the names of all capstones, in no particular order, one per line
+	- format: <Capstone Name>
+	THESE NAMES NEED TO BE THE EXACT SAME AS THE ONES STUDENT ARE CHOOSING FROM (!!)
+
+preferences.csv // the student responses to the Google Form
+	- format:
+		<Email>, <First Choice Capstone>, <Second Choice Capstone>, ... <Nth Choice Capstone>
+
+	(this allows for variability in the # of capstones in a students ranking -- this will be parsed with the CSV)
+
+students.csv // list of all students expected to sign up (veracross dump)
+	- format:
+		<Full Name>,<Current Grade>,<Advisor>,<Email>
+		...
+
+		e.g.
+		Student A, studenta@gmail.com, Grade 10, Mr. Minster
+
+
+------------------------------ OUTPUT ------------------------------
+
+studentMastersheet.csv // formatted for bulk email to all students alerting them of assignments
+	- format is: <Student Name>, <Location>, <Capstone 1 Title>, <Capstone 2 Title>
+
+advisorMastersheet.csv // formatted for email to all advisors (data is grouped by advisory)
+	- format is:
+
+		Advisor: <Advisor Name>
+		<Student Name>, <Location>, <Capstone 1 Title>, <Capstone 2 Title>
+		(... etc for all students in this advisory)
+
+
+	- e.g.
+
+		Advisor: Mr. Minster
+		Stewart Morris, Grisham Hall, Is Lying a Condition of Life?, The Role of Media in the Process of International Policy Making
+		Anders Knospe, SCAS-111, The Methodology of Originalism in the SCOTUS, How can we use our understanding of human cognition to improve artificial neural networks? 
+		...
+		Jack Riley, SCAS 212, How does protest motivate social change?, The State of Sex Education in America
+
+
+attendanceMastersheet.csv // formatted for teachers to take attendance at the presentations they're attending
+	- format:
+		Location: <Location>
+		Capstone 1: <Capstone 1 Title>
+		Capstone 2: <Capstone 2 Title>
+		<Student Name>
+		<Student Name>
+		...
+		<Student Name>
+
+
+------------------------------ ALGORITHM ------------------------------
+
+// the soft cost between a student and a capstone (used for initial assignment)
+studentCapstoneSoftCost(stu, cap) {
+	
+}
+
+// the soft cost of a pair of capstones (used for capstone pairing)
+capstonePairSoftCost(capA, capB) {
+	
+}
+
+
+------------ INITIAL ASSIGNMENT OF STUDENTS TO CAPSTONES ------------
+
+ID all the students, ID all the capstones
+
+randomly assign all 400 students to a capstone (no more than ceil(400 / 14) per capstone)
+
+add ghost students to fill full capacities of all capstones
+
+let temperature = 100, rate = 0.999
+while temperature > some arbitrarily small number
+	randomly choose 2 students
+
+	calculate current soft cost of these students' assignments
+	calculate potential soft cost of swapping these students' assignments
+
+	if swapping is less costly OR rand() * 100 < temperature
+		make the swap
+
+	decrease temperature by rate
+
+remove ghost students
+
+
+------------ GROUPING OF CAPSTONES ------------
+
+add ghost capstones if necessary
+
+add single ghost capstone if necessary
+
+randomly pair off capstones (there can be 1 left over if odd number)
+
+let temperature = 100, rate = 0.999
+while temperature > some arbitrarily small number
+	randomly choose 2 capstones
+
+	if swapping is less costly OR rand() * 100 < temperature
+		make the swap
+
+	decrease temperature by rate
+
+
+remove ghost capstones
+
+ensure each student is assigned the ID's of the two capstones they're assigned to
